@@ -60,7 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cart.aspx" />
-    <Content Include="Folders\Background_Catalog.png" />
+    <Content Include="Folders\Cart.js" />
+    <Content Include="Folders\Catalog.js" />
     <Content Include="Global.asax" />
     <None Include="Service References\CurrencyConvertorService\configuration91.svcinfo" />
     <None Include="Service References\CurrencyConvertorService\configuration.svcinfo" />
@@ -78,20 +79,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AddProduct.aspx" />
     <Content Include="Catalog.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddProduct.aspx.cs">
-      <DependentUpon>AddProduct.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AddProduct.aspx.designer.cs">
-      <DependentUpon>AddProduct.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

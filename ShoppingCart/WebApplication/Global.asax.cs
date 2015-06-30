@@ -18,8 +18,8 @@ namespace UserInterface
 
         protected void Session_Start(object sender, EventArgs e)
         {
-            Session["carrito"] = null;
-
+            Session["myCart"] = null;
+            Session["state"] = null;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

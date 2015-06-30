@@ -17,41 +17,58 @@ namespace UserInterface
             decimal totalAr = 0;
             CurrencyConvertorSoapClient client = new CurrencyConvertorSoapClient();
             double usdCurrency =  client.ConversionRate(Currency.ARS, Currency.USD);
-            
-            if (!(Session["carrito"]==null))
+            string state=(string)Session["state"];
+
+            if (state == "deleteError")
             {
-                foreach(LineaVenta lineaVenta in (List<LineaVenta>)Session["carrito"])
-                {
-
-                    Producto producto = ProductLogic.GetProducto(lineaVenta.ProductId);
-
-                    TableRow row = new TableRow();
-                    row.ID = producto.ProductID.ToString();
-                    row.CssClass = "lineaVenta";
-
-                    TableCell quantity = new TableCell();
-                    quantity.Text = lineaVenta.Quantity.ToString();
-                    row.Cells.Add(quantity);
-
-                    TableCell name = new TableCell();
-                    name.Text = producto.ProductName;
-                    row.Cells.Add(name);
-
-                    TableCell price = new TableCell();
-                    price.Text = "$ "+ decimal.Round(producto.UnitPrice,2).ToString();
-                    row.Cells.Add(price);
-
-                    TableCell subtotal = new TableCell();
-                    subtotal.Text = "$ "+ (producto.UnitPrice * lineaVenta.Quantity).ToString();
-                    row.Cells.Add(subtotal);
-
-                    asptLineaVenta.Rows.Add(row);
-                    totalAr += producto.UnitPrice * lineaVenta.Quantity;
-                }              
-                
-                
+                lblState.CssClass = "deleteError";
+                Session["state"] = "unmodified";
             }
-            lblTotal.Text = "AR$ " + decimal.Round(totalAr,2).ToString() + " (US$ " + decimal.Round((totalAr * (decimal)usdCurrency), 2).ToString() + ")";
+            else if (state == "purchaseCompleted") 
+            {
+                lblState.CssClass = "purchaseCompleted";
+                Session["state"] = "unmodified";
+            }
+            try
+            {
+                if (!(Session["myCart"] == null))
+                {
+                    foreach (LineaVenta lineaVenta in (List<LineaVenta>)Session["myCart"])
+                    {
+
+                        Producto producto = ProductLogic.GetProducto(lineaVenta.ProductId);
+
+                        TableRow row = new TableRow();
+                        row.ID = producto.ProductID.ToString();
+                        row.CssClass = "lineaVenta";
+
+                        TableCell quantity = new TableCell();
+                        quantity.Text = lineaVenta.Quantity.ToString();
+                        row.Cells.Add(quantity);
+
+                        TableCell name = new TableCell();
+                        name.Text = producto.ProductName;
+                        row.Cells.Add(name);
+
+                        TableCell price = new TableCell();
+                        price.Text = "$ " + decimal.Round(producto.UnitPrice, 2).ToString();
+                        row.Cells.Add(price);
+
+                        TableCell subtotal = new TableCell();
+                        subtotal.Text = "$ " + decimal.Round((producto.UnitPrice * lineaVenta.Quantity), 2).ToString();
+                        row.Cells.Add(subtotal);
+
+                        asptLineaVenta.Rows.Add(row);
+                        totalAr += producto.UnitPrice * lineaVenta.Quantity;
+                    }
+                }
+                lblTotal.Text = "AR$ " + decimal.Round(totalAr, 2).ToString() + " (US$ " + decimal.Round((totalAr * (decimal)usdCurrency), 2).ToString() + ")";
+            }
+            catch (NullReferenceException)
+            {
+                lblState.CssClass = "dbConnectionError";
+            }
+            
         }
 
         protected void btnCarga_Click(object sender, EventArgs e)
@@ -63,41 +80,63 @@ namespace UserInterface
         {
 
                 LineaVenta lineaVentaEliminada = new LineaVenta();
-
-                int idLinea = int.Parse(tbxLineaVenta.Text.Replace("PageContent_", ""));
-                List<LineaVenta> carrito = (List<LineaVenta>)Session["carrito"];
-                foreach (LineaVenta lineaVenta in carrito)
+                if (tbxLineaVenta.Text != "")
                 {
-                    if (lineaVenta.ProductId == idLinea)
+                    int idLinea = int.Parse(tbxLineaVenta.Text.Replace("PageContent_", ""));
+                    List<LineaVenta> carrito = (List<LineaVenta>)Session["myCart"];
+                    foreach (LineaVenta lineaVenta in carrito)
                     {
-                        lineaVentaEliminada = lineaVenta;
+                        if (lineaVenta.ProductId == idLinea)
+                        {
+                            lineaVentaEliminada = lineaVenta;
+                        }
                     }
-                }
-                carrito.Remove(lineaVentaEliminada);
-                if (carrito.Count == 0)
-                {
-                    Session["carrito"] = null;
+                    carrito.Remove(lineaVentaEliminada);
+                    if (carrito.Count == 0)
+                    {
+                        Session["myCart"] = null;
 
+                    }
+                    else
+                    {
+                        Session["myCart"] = carrito;
+                    }
                 }
                 else
                 {
-                    Session["carrito"] = carrito;
+                    Session["state"] = "deleteError";
+ 
                 }
             Response.Redirect("~/Cart.aspx");
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-            List<LineaVenta> carrito = (List<LineaVenta>)Session["carrito"];
+
+            List<LineaVenta> carrito = (List<LineaVenta>)Session["myCart"];
+            lblState.CssClass = "purchaseCompleted";
             Producto producto;
-            foreach (LineaVenta lineaVenta in carrito)
-            {
-                producto= ProductLogic.GetProducto(lineaVenta.ProductId);
-                producto.UnitsInStock = (short)(producto.UnitsInStock -lineaVenta.Quantity);
-                ProductLogic.Update(producto);
-            }
-            Session["carrito"] = null;
-            Response.Redirect("~/Catalog.aspx");
+            try{
+                    foreach (LineaVenta lineaVenta in carrito)
+                    {
+                        try 
+                        {	        
+                        producto = ProductLogic.GetProducto(lineaVenta.ProductId);
+                        producto.UnitsInStock = (short)(producto.UnitsInStock - lineaVenta.Quantity);
+                        ProductLogic.Update(producto);	
+                        }
+                        catch (NullReferenceException)
+                        {
+                            lblState.CssClass = "dbConnectionError" ;
+                        }
+                    }
+                    Session["myCart"] = null;
+                    Response.Redirect("~/Catalog.aspx");
+                }
+                catch (NullReferenceException)
+                {
+                    lblState.CssClass = "invalidAction";
+                }
         }
     }
 }

@@ -10,7 +10,7 @@
 namespace UserInterface {
     
     
-    public partial class Cart {
+    public partial class Catalog {
         
         /// <summary>
         /// lblState control.
@@ -22,13 +22,22 @@ namespace UserInterface {
         protected global::System.Web.UI.WebControls.Label lblState;
         
         /// <summary>
-        /// asptLineaVenta control.
+        /// asptCategorias control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table asptLineaVenta;
+        protected global::System.Web.UI.WebControls.Table asptCategorias;
+        
+        /// <summary>
+        /// asptProductos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table asptProductos;
         
         /// <summary>
         /// headProducts control.
@@ -40,48 +49,30 @@ namespace UserInterface {
         protected global::System.Web.UI.WebControls.TableHeaderRow headProducts;
         
         /// <summary>
-        /// lblTotal control.
+        /// tbxQuantity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotal;
+        protected global::System.Web.UI.WebControls.TextBox tbxQuantity;
         
         /// <summary>
-        /// btnCarga control.
+        /// btnAddProduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnCarga;
+        protected global::System.Web.UI.WebControls.Button btnAddProduct;
         
         /// <summary>
-        /// btnBorrar control.
+        /// tbxProduct control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnBorrar;
-        
-        /// <summary>
-        /// btnFinalizar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnFinalizar;
-        
-        /// <summary>
-        /// tbxLineaVenta control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbxLineaVenta;
+        protected global::System.Web.UI.WebControls.TextBox tbxProduct;
     }
 }
