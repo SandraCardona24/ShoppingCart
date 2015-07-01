@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess;
 using System.Data;
+using BussinessLogic;
 
 namespace DataAccess
 {
@@ -18,8 +19,9 @@ namespace DataAccess
                 {
                        return context.Categories.ToList();
                 }
-                catch (EntityException)
+                catch (EntityException entityExcp)
                 {
+                    Logger.Write(entityExcp);
                     return null;
                 }
             }
@@ -29,7 +31,16 @@ namespace DataAccess
         {
             using (NorthWindEntities context= new NorthWindEntities())
             {
-                return context.Categories.Where(x => x.CategoryID == id).FirstOrDefault();
+                try
+                {
+                    return context.Categories.Where(x => x.CategoryID == id).FirstOrDefault();
+                }
+                catch (EntityException entityExcp)
+                {
+                    Logger.Write(entityExcp);
+                    return null;
+                }
+
             }
         }
     }

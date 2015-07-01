@@ -12,10 +12,17 @@ namespace BussinessLogic
     {
         public static Producto GetProducto(int id)
         {
-            Product product= ProductData.GetById(id);
-            Producto producto = Mapping(product);
-            return producto;
-
+            try
+            {
+                Product product = ProductData.GetById(id);
+                Producto producto = Mapping(product);
+                return producto;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+                        
         }
         public static List<Producto> GetListaProductos()
         {
@@ -32,7 +39,6 @@ namespace BussinessLogic
             }
             catch (NullReferenceException)
             {
-
                 return null;
             }
 

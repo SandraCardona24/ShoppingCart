@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BussinessLogic;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,16 @@ namespace DataAccess
         {
             using (NorthWindEntities context = new NorthWindEntities())
             {
-                return context.Suppliers.Where(x => x.SupplierID == id).FirstOrDefault().CompanyName;
+                try
+                {
+                    return context.Suppliers.Where(x => x.SupplierID == id).FirstOrDefault().CompanyName;
+                }
+                catch (EntityException entityExcp)
+                {
+                    Logger.Write(entityExcp);
+                    return null;
+                }           
+
             }
         }
     }

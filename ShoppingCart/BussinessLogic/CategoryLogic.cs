@@ -10,16 +10,23 @@ namespace BussinessLogic
 {
     public static class CategoryLogic
     {
-
         public static Categoria GetCategoria(int id)
         {
-            Category category = CategoryData.GetByID(id);
-            Categoria categoria = Mapping(category);
-            return categoria;
+            try
+            {
+                Category category = CategoryData.GetByID(id);
+                Categoria categoria = Mapping(category);
+                return categoria;
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
+                                                
+                
         }
         public static List<Categoria> GetCategorias()
         {
-
                 List<Category> categoryList = CategoryData.GetAll();
                 List<Categoria> listaCategorias = new List<Categoria>();
                 try

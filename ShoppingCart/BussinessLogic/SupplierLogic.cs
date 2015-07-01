@@ -11,7 +11,14 @@ namespace BussinessLogic
     {
         public static string GetSupplierName(int id)
         {
-            return SupplierData.GetSupplierNameByID(id);
+            try
+            {
+                return SupplierData.GetSupplierNameByID(id);
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
     }
 }

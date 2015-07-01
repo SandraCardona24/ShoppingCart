@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BussinessLogic;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -18,12 +19,12 @@ namespace DataAccess
                     {
                         return context.Products.Where(x => x.ProductID == id).FirstOrDefault();
                     }
-                    catch (EntityException)
+                    catch (EntityException entityExcp)
                     {
+                        Logger.Write(entityExcp);
                         return null;
                     }
-                }
-       
+                }      
         }
 
         public static List<Product> GetAll()
@@ -34,11 +35,11 @@ namespace DataAccess
                 {
                     return context.Products.ToList();
                 }
-                catch (EntityException)
+                catch (EntityException entityExcp)
                 {
+                    Logger.Write(entityExcp);
                     return null;
-                }
-                
+                }           
             }
         }
 
@@ -46,8 +47,16 @@ namespace DataAccess
         {
             using (var context = new NorthWindEntities())
             {
-                context.Entry(product).State = EntityState.Modified;
-                context.SaveChanges();
+                try
+                {
+                    context.Entry(product).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                catch (EntityException entityExcp)
+                {
+                    Logger.Write(entityExcp);
+                    return;
+                }
             }
         }
     }

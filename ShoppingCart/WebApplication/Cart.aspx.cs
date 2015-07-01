@@ -67,8 +67,7 @@ namespace UserInterface
             catch (NullReferenceException)
             {
                 lblState.CssClass = "dbConnectionError";
-            }
-            
+            }          
         }
 
         protected void btnCarga_Click(object sender, EventArgs e)
@@ -78,9 +77,8 @@ namespace UserInterface
 
         protected void btnBorrar_Click(object sender, EventArgs e)
         {
-
                 LineaVenta lineaVentaEliminada = new LineaVenta();
-                if (tbxLineaVenta.Text != "")
+                try
                 {
                     int idLinea = int.Parse(tbxLineaVenta.Text.Replace("PageContent_", ""));
                     List<LineaVenta> carrito = (List<LineaVenta>)Session["myCart"];
@@ -95,24 +93,30 @@ namespace UserInterface
                     if (carrito.Count == 0)
                     {
                         Session["myCart"] = null;
-
                     }
                     else
                     {
                         Session["myCart"] = carrito;
                     }
+                    Response.Redirect("~/Cart.aspx");
                 }
-                else
+                catch (NullReferenceException)
                 {
                     Session["state"] = "deleteError";
- 
                 }
-            Response.Redirect("~/Cart.aspx");
+                catch (FormatException)
+                {
+                    Session["state"] = "deleteError";
+                }
+                finally 
+                {
+                    Response.Redirect("~/Cart.aspx");
+                }
+            
         }
 
         protected void btnFinalizar_Click(object sender, EventArgs e)
         {
-
             List<LineaVenta> carrito = (List<LineaVenta>)Session["myCart"];
             lblState.CssClass = "purchaseCompleted";
             Producto producto;
@@ -131,7 +135,7 @@ namespace UserInterface
                         }
                     }
                     Session["myCart"] = null;
-                    Response.Redirect("~/Catalog.aspx");
+                    Response.Redirect("~/Cart.aspx");
                 }
                 catch (NullReferenceException)
                 {

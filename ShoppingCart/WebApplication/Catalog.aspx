@@ -42,7 +42,6 @@
                         <div class="panel-heading">
                             <h3>Product Details</h3>
                         </div>
-
                         <div class="panel-body">
                             <h4>
                                 <label>ID: </label>

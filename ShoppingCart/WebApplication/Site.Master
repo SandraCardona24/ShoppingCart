@@ -1,7 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="UserInterface.Site" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
@@ -9,24 +8,21 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
-
 <body runat="server" class="index">
     <form id="form1" runat="server">
-        <ul class="nav navbar-inverse">
+        <ul class="nav navbar-inverse text-center">
             <li>
-                <h1 style="font-size: 80px; font-family: Calibri">ASP.NET NORTHWIND</h1>
+                <h1 style="font-size: 80px; font-family: Calibri"><span class="glyphicon glyphicon-globe"></span> ASP.NET NORTHWIND</h1>
             </li>
         </ul>
         <ul class="list-inline list-group-item">
             <li role="presentation" class="text-center" style="width: 200px; font-family: Calibri; text-decoration: none">
-                <asp:HyperLink ID="linkCatalog" NavigateUrl="~/Catalog.aspx" runat="server" CssClass="btn active" Font-Size="XX-Large" Text="CATALOG" BorderColor="Transparent" ForeColor="DarkGray" /></li>
+                <asp:HyperLink ID="linkCatalog" NavigateUrl="~/Catalog.aspx" runat="server" CssClass="btn active" Font-Size="XX-Large" Text="Catalog" BorderColor="Transparent" ForeColor="DarkGray" /></li>
             <li role="presentation" class="text-center" style="width: 200px; font-family: Calibri; text-decoration: none">
                 <asp:HyperLink ID="linkCart" NavigateUrl="~/Cart.aspx" runat="server" CssClass="btn active" Font-Names="Calibri" Font-Size="XX-Large" Text="MyCart" BorderColor="Transparent" ForeColor="DarkGray" /></li>
             <li role="presentation" class="text-center" style="width: 200px; font-family: Calibri; text-decoration: none">
-                <asp:HyperLink NavigateUrl="navigateurl" runat="server" CssClass="btn active" Font-Size="XX-Large" Text="ABM PRODUCTS" BorderColor="Transparent" ForeColor="DarkGray" /></li>
-
+                <asp:HyperLink NavigateUrl="#" runat="server" CssClass="btn active" Font-Size="XX-Large" Text="ABM Products" BorderColor="Transparent" ForeColor="DarkGray" /></li>
         </ul>
-
         <div class="container">
             <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">
@@ -45,7 +41,6 @@
                 </div>
             </div>
         </div>
-
         <header>
             <asp:ContentPlaceHolder ID="PageContent" runat="server"></asp:ContentPlaceHolder>
         </header>

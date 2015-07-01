@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="UserInterface.Cart" EnableEventValidation="true" %>
 
-
 <asp:Content ID="Cart" ContentPlaceHolderID="PageContent" runat="server">
     <script type="text/javascript" src="Folders/Cart.js"></script>
     <div class="container">

@@ -19,7 +19,6 @@ namespace UserInterface
             List<Producto> productos = ProductLogic.GetListaProductos();
             string state= (string)Session["state"];
 
-
             if (state == "modified")
             {
                 lblState.CssClass = "modified";
@@ -30,7 +29,6 @@ namespace UserInterface
                 lblState.CssClass = "inputError";
                 Session["state"] = "unmodified";
             }
-
 
             try
             {
@@ -45,7 +43,6 @@ namespace UserInterface
                     row.Cells.Add(name);
 
                     asptCategorias.Rows.Add(row);
-
                 }
 
                 foreach (Producto producto in productos)
@@ -111,16 +108,13 @@ namespace UserInterface
         protected void btnAdd_Click(object sender, EventArgs e)
         {
             List<LineaVenta> carrito= new List<LineaVenta>();
-
             LineaVenta nuevaLineaVenta = new LineaVenta();
             LineaVenta antiguaLineaVenta = null;
             Session["state"] = "modified";
             try
             {
-
                 nuevaLineaVenta.ProductId = int.Parse(this.tbxProduct.Text);
                 nuevaLineaVenta.Quantity = int.Parse(this.tbxQuantity.Text);
-   
 
                 if (!(Session["myCart"] == null))
                 {
